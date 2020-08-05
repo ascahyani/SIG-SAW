@@ -1,4 +1,7 @@
 @extends('master_admin')
+@push('css')
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+@endpush
 @section('content')
 
 @section ('judul')
@@ -46,18 +49,39 @@
 
                                         {{csrf_field()}}  <!-- untuk generate token-->
 
+                                        
+
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Nama Pasien</label>
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">Nama Pasien</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="nama_pasien" id="select2" >
-                                                    <option selected>-Nama Pasien-</option>
-                                                    @foreach($data_pasien as $pas)
-                                                        <option  value="{{$pas->id}}">{{$pas->nama_pasien}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input class="form-control" type="text" id='pasien' name="nama_pasien" >
+                                                <input class="form-control" type="hidden" id='id_pasien' name="id_pasien" >
+                                                
                                                 
                                             </div>
                                         </div>
+
+                                        <div class="form-group row">
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">Kecamatan</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" id='kecamatan' name="kecamatan" >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">Puskesmas</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" id='puskesmas' name="puskesmas" >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">NIK</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" id='NIK' name="NIK" >
+                                            </div>
+                                        </div>
+
 
                                         <div class="form-group row">
                                             <label for="example-text-input" class="col-sm-2 col-form-label">Tahun</label>
@@ -99,6 +123,7 @@
                                                             <option value="Sebelum Pengobatan Hasil Mikroskopis">Sebelum Pengobatan Hasil Mikroskopis</option>
                                                             <option value="Hasil Mikroskopis Bulan Ke 2">Hasil Mikroskopis Bulan Ke 2</option>
                                                             <option value="Hasil Mikroskopis Bulan Ke 3">Hasil Mikroskopis Bulan Ke 3</option>
+                                                            <option value="Hasil Mikroskopis Bulan Ke 4">Hasil Mikroskopis Bulan Ke 4</option>
                                                             <option value="Hasil Mikroskopis Bulan Ke 5">Hasil Mikroskopis Bulan Ke 5</option>
                                                             <option value="Hasil Akhir Pengobatan">Hasil Akhir Pengobatan</option>
                                                 </select>
@@ -142,3 +167,36 @@
     </div>
 
 @endsection
+@push('script')
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            $( "#pasien" ).autocomplete({
+                source: function( request, response ) {
+                    console.log(request.term)
+                $.ajax({
+                    url:"{{route('pasien')}}",
+                    type: 'post',
+                    dataType: "json",
+                    data: {
+                        _token: CSRF_TOKEN,
+                        cari: request.term
+                    },
+                    success: function( data ) {
+                    response( data );
+                    }
+                });
+                },
+                select: function (event, ui) {
+                    $('#id_pasien').val(ui.item.value);
+                    $('#pasien').val(ui.item.label);
+                    $('#puskesmas').val(ui.item.faskes);
+                    $('#kecamatan').val(ui.item.kecamatan);
+                    $('#NIK').val(ui.item.NIK);
+                    return false;
+                }
+            });
+        });
+  </script>
+  @endpush

@@ -1,48 +1,87 @@
-@extends('master_admin')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
 
-@section ('judul')
+<head>
 
-    <div class="content-page">
-        
-			
-        <!-- Start content -->
-        <div class="content">
-           <div class="container-fluid">
-       
-               <div class="row">
-                   <div class="col-sm-12">
-                       <div class="page-title-box">
-                           <h4 class="page-title">Sistem Informasi Geografis Penyebaran Penyakit Tuberkulosis di Kota Bandar Lampung</h4>
-                           <ol class="breadcrumb">
-                               <li class="breadcrumb-item active mdi mdi-chevron-right ">Halaman Admin</li>
-                           </ol>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SIG TB Kota Bandar Lampung</title>
+
+  <!-- Bootstrap core CSS -->
+  
+  <link href="/assets/pengunjung/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/assets/pengunjung/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="/assets/pengunjung/css/agency.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="/">Halaman Pengunjung</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/peta_pasien_pengunjung">Peta Pasien TB</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/peta_faskes_pengunjung">Peta Titik Faskes</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/gpoligon_p">Peta Daerah Resiko TB</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+
+  <!-- Portfolio Grid -->
+  <section class="bg-light page-section" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Halaman Peta</h2>
+          <h3 class="section-subheading text-muted">Sistem Informasi Geografis Penyebaran Penyakit TB di Kota Bandarlampung</h3>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-17">
+            <div class="card m-b-25">
+              <div class="card-body">
+                  <div class="row clearfix">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <h3 class="section-heading text-uppercase"><center>Peta Faskes yang Menangani Pasien Penyakit Tuberkulosis di Kota Bandar Lampung</center></h3>
+                      <hr />
+                     
+                         </div>
                        </div>
-                   </div>
-               </div>
-               <!-- end row -->
-               <div class="row">
-                            <div class="col-12">
-                                <div class="card m-b-20">
-                                    <div class="card-body">
-
-                                        <div class="row clearfix">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="card">
-                                                    <div class="header">
-                                                        <h2>
-                                                        <center>Peta Penyebaran Faskes yang Menangani Penyakit Tuberkulosis di Kota Bandar Lampung</center>
-                                                           
-                                                           </h2>
-                                                       </div>
-                                                       <hr />
-                                                   </div>
-                                               </div>
-                                           </div>
-                                           <h4 class="mt-0 header-title">Pilih Bulan dan Tahun</h4>
-                                           <form method="post" action="/peta_faskes/cari" class="form-horizontal">
-   
-                                               {{csrf_field()}}  <!-- untuk generate token-->
+                    <h4 class="mt-0 header-title">Pilih Bulan dan Tahun</h4><br>
+                      <form method="post" action="/peta_faskes_pengunjung/cari" class="form-horizontal">
+                        {{csrf_field()}}  <!-- untuk generate token-->
    
                                            <div class="form-group row">
                                                <label class="col-sm-2 col-form-label">Bulan</label>
@@ -77,14 +116,15 @@
                                            <div class="pull-right">
                                                 <button type="submit" class="btn btn-primary btn-rounded btn-md mb-4 float-right">Cari</button>
                                             </div>
-                                        </form>
+                                        </form><br><br>
                                         <h2> {{ $bulan }} {{ $tahun }}</h2>
 
                                         <div class="form-group">
-                                            <div id="dvMap" style="width: 100%; height: 400px;"></div>
+                                            <div id="dvMap" style="width: 100%; height: 450px;"></div>
                                         </div> <br>
+
                                         <div class="col-lg-15">
-                                            <div class="card m-b-30 text-white bg-primary">
+                                            <div class="card m-b-30 text-white bg-info">
                                                 <div class="card-body">
                                                     <blockquote class="card-blockquote mb-0">
                                                     <p>Peta ini menggambarkan Sebaran Titik Fasilitas Kesehatan yang menangani Pasien TB di Kota Bandarlampung. Informasi tentang nama, alamat dan jumlah pasien yang ditangani
@@ -97,17 +137,76 @@
                                         
                                     </div>
                                 </div>
-                            </div> <!-- end col -->
-       
-           </div> <!-- container-fluid -->
-       
-       </div> <!-- content -->
-       
+                            </div> <!-- end col --> 
+      </div>
     </div>
+  </section>
 
-@endsection
-@push('script')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6a6dy99jZcyrlIe7OghOsZ0khO1x4O8&libraries=places" async defer> </script>
+  
+  
+ 
+
+  <!-- Clients -->
+  <section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">    
+           
+               
+                    <div class="col-md-1 col-sm-3">
+                    <a href="https://www.unila.ac.id/">
+                        <img class="img-fluid d-block mx-auto" src="/assets/pengunjung/img/logos/unila2018.png" alt="">
+                    </a>
+                    </div>
+                    
+                    <div class="col-md-1 col-sm-3">
+                    <a href="#">
+                        <img class="img-fluid d-block mx-auto" src="/assets/pengunjung/img/logos/dinkes2.jpg" alt="">
+                    </a>
+                    </div>
+               
+            </div>
+        </div>
+  </section>
+
+  
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center">
+      <div class="col-md-12">
+          <span class="copyright"> &copy; 2019 Asti Cahyani-Ilmu Komputer Universitas Lampung</span>
+        </div>
+
+       
+        
+
+       
+      </div>
+    </div>
+  </footer>
+
+  <!-- Portfolio Modals -->
+
+  
+  
+
+  
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/assets/pengunjung/vendor/jquery/jquery.min.js"></script>
+  <script src="/assets/pengunjung/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="/assets/pengunjung/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="/assets/pengunjung/js/jqBootstrapValidation.js"></script>
+  <script src="/assets/pengunjung/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="/assets/pengunjung/js/agency.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6a6dy99jZcyrlIe7OghOsZ0khO1x4O8&libraries=places" async defer> </script>
 <script type="text/javascript">
 
 var markers = [
@@ -119,7 +218,6 @@ var markers = [
  "alamat": "{{ $a['alamat'] }}",          //panggil alamat
  "jumlah_pasien": "{{ $a['jumlah_pas'] }}",
  "nama_kecamatan": "{{  $a['kecamatan'] }}"
-
  },
 @endforeach
     ];
@@ -149,7 +247,6 @@ var markers = [
                           },
                     title: data.nama_faskes
                 });
-
                 (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
                         infoWindow.setContent(          //bikin info di titik nya, kalo di klik ntar muncul
@@ -185,4 +282,8 @@ var markers = [
         })
     </script>
 
-@endpush
+
+
+</body>
+
+</html>

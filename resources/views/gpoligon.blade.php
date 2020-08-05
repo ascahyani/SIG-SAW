@@ -106,7 +106,7 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu" id="side-menu">
                             <li>
-                                <a href="index.html" class="waves-effect">
+                                <a href="/admin" class="waves-effect">
                                     <i class="mdi mdi-view-dashboard"></i><span class="badge badge-primary badge-pill float-right"></span> <span> Dashboard </span>
                                 </a>
                             </li>
@@ -114,9 +114,9 @@
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-maps"></i><span> Lihat Peta <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
-                                    <li><a href="/peta_pasien"> Peta Penyebaran TB</a></li>
+                                    <li><a href="/peta_pasien"> Peta Penyebaran Pasien TB</a></li>
                                     <li><a href="/peta_faskes"> Peta Penyebaran Faskes</a></li>
-                                    <li><a href="/gpoligon"> Peta Daerah Rawan TB</a></li>
+                                    <li><a href="/gpoligon"> Peta Daerah dengan Tingkat Faktor Resiko Kontak TB</a></li>
                                 </ul>
                             </li>
                             
@@ -156,7 +156,7 @@
                        <div class="page-title-box">
                            <h4 class="page-title">Sistem Informasi Geografis Penyebaran Penyakit Tuberkulosis di Kota Bandar Lampung</h4>
                            <ol class="breadcrumb">
-                               <li class="breadcrumb-item active mdi mdi-chevron-right ">Halaman Peta Pesebaran Pasien Tuberkulosis</li>
+                               <li class="breadcrumb-item active mdi mdi-chevron-right ">Halaman Peta Daerah dengan Tingkat Faktor Resiko Kontak TB</li>
                            </ol>
                        </div>
                    </div>
@@ -172,7 +172,7 @@
                                                 <div class="card">
                                                     <div class="header">
                                                         <h2>
-                                                            <center>Peta Penyebaran Pasien Penyakit Tuberkulosis di Kota Bandar Lampung</center>
+                                                            <center>Peta Daerah dengan Tingkatan Faktor Resiko Kontak TB di Kota Bandar Lampung</center>
                                                            
                                                             </h2>
                                                     </div>
@@ -214,7 +214,9 @@
                                         <div class="pull-right">
                                                 <button type="submit" class="btn btn-primary btn-rounded btn-md mb-4 float-right" id="btn-pilih">Cari</button>
                                             </div>
+                                           
                                             <br>
+                                            <h2 id="keterangan_waktu"></h2>
                                             <br>
                                             <div class="col-lg-12" id="box-keterangan">
                                             </div>
@@ -228,7 +230,23 @@
                                                 <body style="font-family: Arial; border: 0 none;">
                                                 <div id = "map" style = "width:1000px; height:500px;"></div>
 
-                                    </div>
+                                    </div><br><br>
+
+                                    <div class="col-lg-15">
+                                            <div class="card m-b-30 text-white bg-primary">
+                                                <div class="card-body">
+                                                    <blockquote class="card-blockquote mb-0">
+                                                    <p>Peta ini menampilkan Daerah dengan tingkatan faktor resiko kontak dengan penderita Tuberkulosis. 
+                                                        Menggunakan Sistem Pengambilan Keputusan dengan Metode Simple Additive Weighting (SAW) dan menggunakan kriteria : 
+                                                        Banyaknya Kasus TB (27%); Kepadatan Penduduk (25%); Indeks Rumah Tangga Berperilaku Hidup Bersih dan Sehat (23%)
+                                                        Jumlah Fasilitas Kesehatan (15%); dan Jumlah Kematian Akibat TB (10%). <br> Menghasilkan 4 tingkatan Resiko : 
+                                                        Resiko Rendah, Resiko Sedang, Resiko Tinggi, Resiko Sangat Tinggi
+                                                    </p>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                 </div>
                             </div> <!-- end col -->
                     </div> <!-- end row -->
@@ -369,6 +387,8 @@
          success: function(response){
            var jsonReponse = jQuery.parseJSON(response); 
            var arrayLength = jsonReponse.kelas.length;
+           var keterangan_waktu = bulan + " " + tahun;
+           $("#keterangan_waktu").html(keterangan_waktu);
            $("#box-keterangan").html('');
            for (var i = 0; i < arrayLength; i++) {
             $("#box-keterangan").append("<div class='col-md-2' style='background-color:"+jsonReponse.kelas[i].color+"' >"+jsonReponse.kelas[i].min+" - "+jsonReponse.kelas[i].max+"</div>");

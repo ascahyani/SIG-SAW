@@ -9,6 +9,20 @@ use PDF;
 
 class FaskesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function admin(){
+        return view ('admin');
+    }
+
+    public function login(){
+        return view ('login');
+    }
+
     public function index(){
         $faskes = data_faskes::all();
         $kecamatan = DB::table('data_kecamatan')->get();
@@ -36,7 +50,6 @@ class FaskesController extends Controller
 
         $this->validate($request, [
             'nama_faskes'=>'required',
-            'tahun'=>'required',
             'latitude'=>'required',
             'longitude'=>'required',
             'alamat'=>'required',
@@ -47,7 +60,6 @@ class FaskesController extends Controller
         DB::table('data_faskes')->insert([
             'id_kecamatan'=>$request->kecamatan,
             'nama_faskes'=>$request->nama_faskes,
-            'tahun'=>$request->tahun,
             'latitude'=>$request->latitude,
             'longitude'=>$request->longitude,
             'alamat'=>$request->alamat,
@@ -77,7 +89,6 @@ class FaskesController extends Controller
 
         $this->validate($request, [
             'nama_faskes'=>'required',
-            'tahun'=>'required',
             'latitude'=>'required',
             'longitude'=>'required',
             'alamat'=>'required',
@@ -88,7 +99,6 @@ class FaskesController extends Controller
         DB::table('data_faskes')->where('id',$request->id)->update([
             'id_kecamatan'=>$request->nama_kecamatan,
             'nama_faskes'=>$request->nama_faskes,
-            'tahun'=>$request->tahun,
             'latitude'=>$request->latitude,
             'longitude'=>$request->longitude,
             'alamat'=>$request->alamat,

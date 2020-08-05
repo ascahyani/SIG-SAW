@@ -29,7 +29,7 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
       
-                                        <h4 class="mt-0 header-title">Form Input Data Pasien TB</h4>
+                                        <h4 class="mt-0 header-title">Form Edit Data Pasien TB</h4>
                                         <br/>
                                             {{-- menampilkan error validasi --}}
                                             @if (count($errors) > 0)
@@ -85,6 +85,14 @@
                                         </div>
 
                                         <div class="form-group row">
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">NIK</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="NIK" value="{{$pasien->NIK}}" id="example-text-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
                                             <label for="example-text-input" class="col-sm-2 col-form-label">Nama</label>
                                             <div class="col-sm-10">
                                                 <input class="form-control" type="text" name="nama" value="{{$pasien->nama_pasien}}" id="example-text-input">
@@ -94,7 +102,7 @@
                                         <div class="form-group row">
                                             <label for="example-date-input" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                                             <div class="col-sm-10">
-                                                <input class="form-control" type="date" value="2011-08-19" name="tanggal_lahir" id="example-date-input">
+                                                <input class="form-control" type="date" value="{{old('tanggal_lahir', $pasien->tanggal_lahir)}}" name="tanggal_lahir" id="example-date-input">
                                             </div>
                                         </div>
 
@@ -151,7 +159,7 @@
                                         <div class="form-group row">
                                             <label for="example-date-input" class="col-sm-2 col-form-label">Tanggal Mulai Pengobatan</label>
                                             <div class="col-sm-10">
-                                                <input class="form-control" type="date" value="2011-08-19" name="mulai_pengobatan" id="example-date-input">
+                                                <input class="form-control" type="date" value="{{old('tanggal_mulaipengobatan', $pasien->tanggal_mulaipengobatan)}}" name="mulai_pengobatan" id="example-date-input">
                                             </div>
                                         </div>
 

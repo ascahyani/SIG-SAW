@@ -12,15 +12,21 @@
 		}
 	</style>
 	<center>
-		<h5>Data Riwayat Pasien Tuberkulosis Kota Bandarlampung</h4>
+		<h5>Data Riwayat Pasien Tuberkulosis Kota Bandarlampung <br></h4> 
+		
 		
 	</center>
  
 	<table class='table table-bordered'>
 		<thead>
         <tr>			
-           <th>No.</th>
-           <th>Nama Pasien</th>
+		   <th>No.</th>
+		   <th>Kecamatan</th>
+		   <th>Nama Pasien</th>
+		   <th>jenis TB</th>
+		   <th>Alamat</th>
+		   <th>Latitude</th>
+		   <th>Longitude</th>
            <th>Tahun</th>
            <th>Bulan</th>
            <th>jenis Tindakan</th>
@@ -33,7 +39,12 @@
 			@foreach($riwayat_pasien as $riwayat)
 			<tr>
 				<td>{{ $i++ }}</td>
-                <td>{{ $riwayat->pasien->nama_pasien }}</td>
+				<td>{{$riwayat->nama_kecamatan}}</td>
+				<td>{{ $riwayat->nama_pasien }}</td>
+				<td>{{ $riwayat->jenis_tb }}</td>
+				<td>{{ $riwayat->alamat }}</td>
+				<td>{{ $riwayat->latitude }}</td>
+				<td>{{ $riwayat->longitude }}</td>
                 <td>{{ $riwayat->tahun }}</td>
                 <td>{{ $riwayat->bulan }}</td>
                 <td>{{ $riwayat->jenis_tindakan }}</td>

@@ -5,10 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\data_pasien;
 use DB;
+use PDF;
 use App\data_kecamatan;
 
 class PasienController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function admin(){
+        return view ('admin');
+    }
+
+    public function login(){
+        return view ('login');
+    }
+    
     public function index()
     {
         $pasien= data_pasien::all();
@@ -49,6 +63,7 @@ class PasienController extends Controller
             'nama_kecamatan'=>'required',
             'nama_faskes' => 'required',
             'jenis_tb'=>'required',
+            'NIK'=>'required',
             'nama' =>'required',
             'tanggal_lahir' =>'required',
             'tipe_diagnosa' =>'required',
@@ -62,6 +77,7 @@ class PasienController extends Controller
             'id_kecamatan'=>$request->nama_kecamatan,
             'id_faskes' => $request->nama_faskes,
             'jenis_tb'=>$request->jenis_tb,
+            'NIK'=>$request->NIK,
             'nama_pasien' => $request->nama,
             'tanggal_lahir' => $request->tanggal_lahir,
             'tipe_diagnosa' => $request->tipe_diagnosa,
@@ -97,6 +113,7 @@ class PasienController extends Controller
             'nama_kecamatan'=>'required',
             'jenis_tb'=>'required',
             'nama_faskes' => 'required',
+            'NIK' =>'required',
             'nama' =>'required',
             'tanggal_lahir' =>'required',
             'tipe_diagnosa' =>'required',
@@ -110,6 +127,7 @@ class PasienController extends Controller
             'id_kecamatan'=>$request->nama_kecamatan,
             'id_faskes'=>$request->nama_faskes,
             'jenis_tb'=>$request->jenis_tb,
+            'NIK'=>$request->NIK,
             'tipe_diagnosa' => $request->tipe_diagnosa,
             'latitude'=>$request->latitude,
             'longitude'=>$request->longitude,
@@ -148,5 +166,37 @@ class PasienController extends Controller
 
         return $arr;  //keluarin output nama kecamatan dan jumlah pasien yang udh diitung
 
+    }
+
+    public function cetak(Request $req)
+    {
+        $tahun = 2017;
+        $bulan = 'Maret';
+
+        $pasien = DB::table('data_pasien')->where('tahun', $tahun)->where('bulan', $bulan)->get();
+        return $pasien;
+
+        // $data = DB::table('data_pasien')
+        //             ->leftjoin('data_faskes', 'data_faskes.id', '=', 'data_pasien.id_faskes')
+        //             ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
+        //             ->select ('data_pasien.id',
+        //                         'data_kecamatan.nama_kecamatan',
+        //                         'data_faskes.nama_faskes',
+        //                         'data_pasien.jenis_tb',
+        //                         'data_pasien.nama_pasien', 
+        //                         'data_pasien.tanggal_lahir',
+        //                         'data_pasien.alamat ',
+        //                         'data_pasien.tipe_diagnosa', 
+        //                         'data_pasien.latitude',
+        //                         'data_pasien.longitude',
+        //                         'data_pasien.tanggal_mulaipengobatan' )
+        //             ->where('tahun', $tahun)
+        //             ->where('bulan', $bulan)
+        //             ->get();
+
+        // $pdf = PDF::loadview('datapasien_pdf',['data_pasien'=>$pasien])->setPaper('a4', 'lanscape');
+        // set_time_limit(600);
+        // return $pdf->download('data-Pasien-pdf'.date('Y-m-d').'.pdf');
+        // // return $pdf->stream();
     }
 }

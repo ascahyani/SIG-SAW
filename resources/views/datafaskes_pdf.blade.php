@@ -22,7 +22,6 @@
            <th>No.</th>
             <th>Nama Fasilitas Kesehatan</th>
             <th>Kecamatan</th>
-            <th>Tahun</th>
             <th>Latitude</th>
             <th>Longitude</th>
             <th>Alamat</th>
@@ -37,7 +36,6 @@
 				<td>{{ $i++ }}</td>
                 <td>{{ $faskes->nama_faskes }}</td>
                 <td>{{ $faskes->kec->nama_kecamatan }}</td>
-                <td>{{ $faskes->tahun }}</td>
                 <td>{{ $faskes->latitude }}</td>
                 <td>{{ $faskes->longitude }}</td>
                 <td>{{ $faskes->alamat }}</td>

@@ -6,9 +6,24 @@ use Illuminate\Http\Request;
 use App\data_kecamatan;
 use DB;
 use PDF;
+use App\Exports\KecamatanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KecamatanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function admin(){
+        return view ('admin');
+    }
+
+    public function login(){
+        return view ('login');
+    }
+    
     public function index(){
 
         //ambil data kecamatan
@@ -92,4 +107,9 @@ class KecamatanController extends Controller
         return $pdf->download('data-kecamatan-pdf'.date('Y-m-d').'.pdf');
         // return $pdf->stream();
     }
+
+    public function excel()
+	{
+		return Excel::download(new KecamatanExport, 'data_kecamatan.xlsx');
+	}
 }

@@ -29,7 +29,7 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
 
-                                        <h4 class="mt-0 header-title">Halaman Kelola Data Pasien</h4><a href="/data_pasien_tb/cetak" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak Data</a>
+                                        <h4 class="mt-0 header-title">Halaman Kelola Data Pasien</h4>
                                         <a href="/data_pasien_tb/tambah"class="btn btn-primary btn-md float-right mb-4" id="right-panel-link">Tambah Data Baru</a>
                                         
                                         <div class="table-responsive">
@@ -42,6 +42,7 @@
                                                 <th>Nama Kecamatan</th>
                                                 <th>Nama Faskes</th>
                                                 <th>Jenis TB</th>
+                                                <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Tanggal Lahir</th>
                                                 <th>Alamat</th>
@@ -63,6 +64,7 @@
                                                     <td>{{ $pasien->kec->nama_kecamatan}}</td>
                                                     <td>{{ $pasien->faskes->nama_faskes }}</td>
                                                     <td>{{ $pasien->jenis_tb }}</td>
+                                                    <td>{{ $pasien->NIK }}</td>
                                                     <td>{{ $pasien->nama_pasien }}</td>
                                                     <td>{{ $pasien->tanggal_lahir }}</td>
                                                     <td>{{ $pasien->alamat }}</td>

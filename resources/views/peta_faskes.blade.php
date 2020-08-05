@@ -31,7 +31,7 @@
                                                 <div class="card">
                                                     <div class="header">
                                                         <h2>
-                                                            <center>Peta Penyebaran Pasien Penyakit Tuberkulosis di Kota Bandar Lampung</center>
+                                                            <center>Peta Penyebaran Faskes di Kota Bandar Lampung</center>
                                                            
                                                         </h2>
                                                     </div>

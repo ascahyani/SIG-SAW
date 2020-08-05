@@ -29,7 +29,9 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
 
-                                        <h4 class="mt-0 header-title">Halaman Kelola Data Riwayat Pasien</h4> <a href="/data_riwayat_pasien/cetak" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak Data</a>
+                                        <h4 class="mt-0 header-title">Halaman Kelola Data Riwayat Pasien</h4> 
+                                        <!-- <a href="/data_riwayat_pasien/filter" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak Data</a> -->
+                                        <a href="/data_riwayat_pasien/excel" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak</a>
                                         <a href="/data_riwayat_pasien/tambah"class="btn btn-primary btn-md float-right mb-4" id="right-panel-link">Tambah Data Baru</a>
                                         
                                         <div class="table-responsive">

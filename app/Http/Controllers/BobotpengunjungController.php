@@ -9,23 +9,10 @@ use App\data_pasien;
 use App\data_kecamatan;
 use App\riwayat_pasien;
 use DB;
-use phpDocumentor\Reflection\Types\This;
-use Storage;
-class BobotController extends Controller
+
+
+class BobotpengunjungController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    public function admin(){
-        return view ('admin');
-    }
-
-    public function login(){
-        return view ('login');
-    }
-
 
     public function penduduk() //mau bikin bobot untuk kepadatan penduduk
                                 // di fungsi ini, di deklarasiin semua dulu
@@ -45,19 +32,19 @@ class BobotController extends Controller
     {
         $data = $hasil;
         if($data >= 1 && $data  <= 2500){
-            return 1;
+            return 5;
         }else{
             if($data  >= 2501 && $data  <= 5000){
-                return 2;
+                return 4;
             }else {
                 if ($data  >= 5001 && $data  <= 7500) {
                     return 3;
                 }else {
                     if ($data  >= 7501 && $data  <=10000) {
-                        return 4;
+                        return 2;
                     }else {
                         if ($data  > 10000) {
-                            return 5;
+                            return 1;
                         }
                     }
                 }
@@ -79,7 +66,6 @@ class BobotController extends Controller
         
                     $collection = collect($indeks);
                     $plucked = $collection->pluck('jumlah_rtphbs');
-                    return $indeks;
                     $has = [];
                     foreach ($plucked as $value) {
                         $has  [] = [
@@ -161,20 +147,20 @@ class BobotController extends Controller
                     ->where('riwayat_pasien.bulan', $bulan)
                     ->count();
         
-        if($kasus >= 0 && $kasus  <= 15){
-            return 1;
+        if($kasus >= 0 && $kasus  <= 5){
+            return 5;
         }else{
-            if($kasus >= 16 && $kasus  <= 30){
-                return 2;
+            if($kasus >= 5 && $kasus  <= 10){
+                return 4;
             }else {
-                if ($kasus >= 31 && $kasus  <= 45) {
+                if ($kasus >= 10 && $kasus  <= 15) {
                     return 3;
                 }else {
-                    if ($kasus >= 46 && $kasus  <= 60) {
-                        return 4;
+                    if ($kasus >= 15 && $kasus  <= 25) {
+                        return 2;
                     }else {
-                        if ($kasus > 60) {
-                            return 5;
+                        if ($kasus > 25) {
+                            return 1;
                         }
                     }
                 }
@@ -194,38 +180,37 @@ class BobotController extends Controller
                     ->where('riwayat_pasien.bulan', $bulan)
                     //->get()
                     ->count();
-        if($mati ==0){
-            return 1;
+        if($mati >= 0 && $mati  <= 25){
+            return 5;
         }else{
-            if($mati ==1){
-                return 2;
+            if($mati >= 26 && $mati <= 50){
+                return 4;
             }else {
-                if ($mati ==2) {
+                if ($mati >= 51 && $mati <= 75) {
                     return 3;
                 }else {
-                    if ($mati ==3) {
-                        return 4;
+                    if ($mati >= 76 && $mati  <= 100) {
+                        return 2;
                     }else {
-                        if ($mati > 3) {
-                            return 5;
+                        if ($mati > 100) {
+                            return 1;
                         }
                     }
                 }
             }
         }
     }
-
     public function kepadatan($id,$tahun)
     {
         $padat = DB::table('data_kepadatan')     
                     ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_kepadatan.id_kecamatan')
-                    ->select('data_kepadatan.kepadatan_penduduk', 'data_kecamatan.id', 'data_kecamatan.nama_kecamatan')
-                    ->groupBy('data_kepadatan.id_kecamatan')
-                    //->where('data_kepadatan.id_kecamatan', $id)
+                    ->select('data_kepadatan.kepadatan_penduduk')
+                    //->groupBy('data_kepadatan.id_kecamatan')
+                    ->where('data_kepadatan.id_kecamatan', $id)
                     ->where('data_kepadatan.tahun', $tahun)
                     ->get();
         //$kasus = 3500;
-        #return $padat;
+        
         $collection = collect($padat);
         $plucked = $collection->pluck('kepadatan_penduduk');
         $hasil = [];
@@ -234,8 +219,6 @@ class BobotController extends Controller
                 $value
             ];
         }
-
-        //return $hasil;
         if (!empty($hasil)) {
             $data = $hasil[0][0];
             if($data >= 1 && $data  <= 2500){
@@ -294,22 +277,20 @@ class BobotController extends Controller
         
         //aji buat
 
-        //nyari min dan max dari bobo tiap kriteria
-        $min_kasusTB = max($nilai_kasusTB); //cost = min/nilai
-        $min_kepadatan = max($nilai_kepadatan); //cost = min/nilai
-        $min_kematian = max($nilai_kematian); //cost = min/nilai
-        $max_indeks = min($nilai_indeks); // benefit = nilai/max
-        $max_faskes = min($nilai_faskes); //benefit = nilai/max
-        return  $data;
+        $min_kasusTB = min($nilai_kasusTB);
+        $min_kepadatan = min($nilai_kepadatan);
+        $min_kematian = min($nilai_kematian);
+        $max_indeks = max($nilai_indeks);
+        $max_faskes = max($nilai_faskes);
         foreach ($data as $key => $da) {
             $laporan[] = [
                 'id_kecamatan' => $da['id_kecamatan'],
                 'nama_kecamatan' => $da['kecamatan'],
-                'jumlah' => (($da['bobot_kasustb']/$min_kasusTB)*30) + 
-                            (($da['bobot_kepadatan']/ $min_kepadatan )*25) + 
-                            (($da['bobot_kematian']/ $min_kematian)*7) +
-                            (($max_indeks/$da['bobot_index'])*23) +
-                            (($max_faskes/$da['bobot_faskes'])*15)
+                'jumlah' => (($min_kasusTB / $da['bobot_kasustb'])*27) + 
+                            (($min_kepadatan / $da['bobot_kepadatan'])*25) + 
+                            (($min_kematian / $da['bobot_kematian'])*23) +
+                            (($da['bobot_index'] / $max_indeks)*15) +
+                            (($da['bobot_faskes'] / $max_faskes)*10)
             ];
         }
         //return $laporan;  //lengkap
@@ -368,7 +349,7 @@ class BobotController extends Controller
     }
     public function matriks()
     {
-        return view('gpoligon');
+        return view('peng_gpoligon');
     }
     public function json()
     {

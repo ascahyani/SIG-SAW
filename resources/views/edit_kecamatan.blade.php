@@ -29,7 +29,7 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
       
-                                        <h4 class="mt-0 header-title">Form Input Data Kecamatan</h4>
+                                        <h4 class="mt-0 header-title">Form Edit Data Kecamatan</h4>
                                         <br/>
                                             {{-- menampilkan error validasi --}}
                                             @if (count($errors) > 0)

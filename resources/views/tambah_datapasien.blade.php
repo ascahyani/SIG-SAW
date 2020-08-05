@@ -82,6 +82,14 @@
                                         </div>
 
                                         <div class="form-group row">
+                                            <label for="example-text-input" class="col-sm-2 col-form-label">NIK</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="NIK" id="example-text-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
                                             <label for="example-text-input" class="col-sm-2 col-form-label">Nama</label>
                                             <div class="col-sm-10">
                                                 <input class="form-control" type="text" name="nama" id="example-text-input">

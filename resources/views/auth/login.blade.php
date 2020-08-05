@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Lexa - Responsive Bootstrap 4 Admin Dashboard</title>
+        <title>Login Admin SIG-TB</title>
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />
         <link rel="shortcut icon" href="/assets/assets/images/dinkes.jpg">
@@ -35,12 +35,12 @@
                         {{ csrf_field() }}>
                             
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="username">Email</label>
-                                <input id="email" type="email" class="form-control" name="email" placeholder="Enter email" value="{{ old('email') }}" required autofocus>
+                                <label for="username">Name</label>
+                                <input id="name" type="text" class="form-control" name="name" placeholder="Enter name" value="{{ old('name') }}" required autofocus>
                             </div>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
 

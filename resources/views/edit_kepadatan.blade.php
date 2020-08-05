@@ -16,7 +16,7 @@
                        <h4 class="page-title">Sistem Informasi Geografis Penyebaran Penyakit Tuberkulosis di Kota Bandar Lampung</h4>
                                     
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item active">Halaman Kelola Data Kepadatan</li>
+                                        <li class="breadcrumb-item active">Halaman Kelola Data Kepadatan Penduduk</li>
                                         
                                     </ol>
                        </div>
@@ -29,7 +29,7 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
       
-                                        <h4 class="mt-0 header-title">Form Edit Data Kepadatan</h4>
+                                        <h4 class="mt-0 header-title">Form Edit Data Kepadatan Penduduk</h4>
                                         <br/>
                                             {{-- menampilkan error validasi --}}
                                             @if (count($errors) > 0)

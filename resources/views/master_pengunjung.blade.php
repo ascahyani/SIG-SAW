@@ -104,9 +104,9 @@
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-maps"></i><span> Lihat Peta <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
-                                    <li><a href="/peta_pasien"> Peta Penyebaran TB</a></li>
-                                    <li><a href="/peta_faskes"> Peta Penyebaran Faskes</a></li>
-                                    <li><a href="/peta_rawan"> Peta Daerah Rawan TB</a></li>
+                                    <li><a href="/peta_pasien_pengunjung"> Peta Penyebaran TB</a></li>
+                                    <li><a href="/peta_faskes_pengunjung"> Peta Penyebaran Faskes</a></li>
+                                    <li><a href="/gpoligon_p"> Peta Daerah dengan Tingkat Faktor Resiko Kontak TB</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -179,7 +179,7 @@
               });
     
     </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6a6dy99jZcyrlIe7OghOsZ0khO1x4O8&libraries=places" async defer> </script>
 <script type="text/javascript">
     window.onload = function() {
 

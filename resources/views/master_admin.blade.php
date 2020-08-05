@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
        
 <!-- Mirrored from lexa-node-vert.ourdemo.website/pages-blank by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Feb 2019 07:51:42 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
@@ -7,6 +7,8 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+         <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>SIG TB Kota Bandarlampung</title>
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />
@@ -41,6 +43,14 @@
 
               <link rel="stylesheet" href="/assets/dist/css/select2.css"/>
               <link rel="stylesheet" href="/assets/dist/css/select2.min.css"/>
+              <style>
+                .kecam{
+                padding:7px;
+                }
+                .kecam {font-size:13,5px; color:#957DAD
+                }
+            </style>
+            @stack('css')
            
          
         
@@ -74,7 +84,7 @@
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 
                                     <!-- item-->
-                                    <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Ubah Password</a>
+                                 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" href="{{ route('logout') }}"onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="mdi mdi-power text-danger"></i> Logout</a>
@@ -109,7 +119,7 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu" id="side-menu">
                             <li>
-                                <a href="index.html" class="waves-effect">
+                                <a href="/admin" class="waves-effect">
                                     <i class="mdi mdi-view-dashboard"></i><span class="badge badge-primary badge-pill float-right"></span> <span> Dashboard </span>
                                 </a>
                             </li>
@@ -117,9 +127,9 @@
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-maps"></i><span> Lihat Peta <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
-                                    <li><a href="/peta_pasien"> Peta Penyebaran TB</a></li>
+                                    <li><a href="/peta_pasien"> Peta Penyebaran Pasien TB</a></li>
                                     <li><a href="/peta_faskes"> Peta Penyebaran Faskes</a></li>
-                                    <li><a href="/gpoligon"> Peta Daerah Rawan TB</a></li>
+                                    <li><a href="/gpoligon"> Peta Daerah dengan Tingkat Faktor Resiko Kontak TB</a></li>
                                 </ul>
                             </li>
                             
@@ -256,6 +266,7 @@
         });
     }
 </script>
+
 @stack('script');
 
     </body>

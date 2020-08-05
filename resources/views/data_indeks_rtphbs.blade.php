@@ -29,7 +29,7 @@
                                 <div class="card m-b-20">
                                     <div class="card-body">
 
-                                        <h4 class="mt-0 header-title">Halaman Kelola Data Jenis Tuberkulosis</h4><a href="/data_indeks_rtphbs/cetak" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak Data</a>
+                                        <h4 class="mt-0 header-title">Halaman Kelola Data Indeks RTPHBS</h4><a href="/data_indeks_rtphbs/cetak" class="btn btn-outline-warning waves-effect waves-light" id="right-panel-link">Cetak Data</a>
                                         
                                         <a href="/data_indeks_rtphbs/tambah" class="btn btn-primary btn-md float-right mb-4" id="right-panel-link">Tambah Data Baru</a>
                                         

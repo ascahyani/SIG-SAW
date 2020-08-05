@@ -72,7 +72,9 @@ class SIGTBController extends Controller
         $bulan = $Request->bulan;
         $tahun = $Request->tahun; 
 
-        $titik = DB::table('data_faskes')->join('data_kecamatan', 'data_kecamatan.id', '=', 'data_faskes.id_kecamatan')->get();
+        $titik = DB::table('data_faskes')
+        ->join('data_kecamatan', 'data_kecamatan.id', '=', 'data_faskes.id_kecamatan')
+        ->get();
 
         $data_titik = [];
 
@@ -124,60 +126,63 @@ class SIGTBController extends Controller
     }
 
     public function peta_pasienn(Request $r)
-    {   
+    {  
         $bulan = $r->bulan;
         $tahun = $r->tahun;
-        // $data = DB::table('riwayat_pasien')
-        //         ->leftjoin('data_pasien', 'data_pasien.id', '=', 'riwayat_pasien.id_pasien')
-        //         ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
-        //         ->where('tahun', $tahun)
-        //         ->where('bulan', $bulan)
-        //         ->WhereNotIn('riwayat_pasien.status',['Meninggal', 'Sembuh'])
-        //         ->get();
+
+        $data = DB::table('riwayat_pasien')
+            ->leftjoin('data_pasien', 'data_pasien.id', '=', 'riwayat_pasien.id_pasien')
+            ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
+            ->where('tahun', $tahun)
+            ->where('bulan', $bulan)
+            ->get();
         
-        // return $data;
+            return view ('peta_pasienn')->with([  //return ke peta_pasien dengan bikin variabel arr
+                'pasien' => $data,
+                'tahun' => $tahun,
+                'bulan' => $bulan
+            ]);
         
-
-        if(isset($r->kecaa)){
-            $keca = $r->kecaa;
-
-            $data = DB::table('riwayat_pasien')
-                    ->leftjoin('data_pasien', 'data_pasien.id', '=', 'riwayat_pasien.id_pasien')
-                    ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
-                    ->where('tahun', $tahun)
-                    ->where('bulan', $bulan)
-                    ->whereIn('data_kecamatan.id', implode( ',', $keca))
-                    ->WhereNotIn('riwayat_pasien.status',['Meninggal', 'Sembuh'])
-                    ->get();
-        
-                  
-            response()->json($data);
-            return view ('pasien_kec', compact('data'))->with([  //return ke peta_pasien dengan bikin variabel arr
-                        'pasien' => $data,
-                        'tahun' => $tahun,
-                        'bulan' => $bulan
-                    ]);      
-                
-        } 
-
-        else {
-
-            $data = DB::table('riwayat_pasien')
-                    ->leftjoin('data_pasien', 'data_pasien.id', '=', 'riwayat_pasien.id_pasien')
-                    ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
-                    ->where('tahun', $tahun)
-                    ->where('bulan', $bulan)
-                    ->WhereNotIn('riwayat_pasien.status',['Meninggal', 'Sembuh'])
-                    ->get();
-            
-            return view ('pasien_kec')->with([  //return ke peta_pasien dengan bikin variabel arr
-                        'pasien' => $data,
-                        'tahun' => $tahun,
-                        'bulan' => $bulan
-                    ]);
-        }
     } 
     
+    public function cekbox(Request $r)
+    {
+        
+        $kecam = riwayat_pasien::all();
+        return view ('cekbox');
+
+        if(isset($r->kecaa)){
+        echo $keca = $r->finalkecaa;
+
+        }
+        // else{
+        //     return 4;
+        // }
+            // $bulan = "Mei";
+            // $tahun = 2017;
+
+            
+            // $data = DB::table('riwayat_pasien')
+            //     ->leftjoin('data_pasien', 'data_pasien.id', '=', 'riwayat_pasien.id_pasien')
+            //     ->leftjoin('data_kecamatan', 'data_kecamatan.id', '=', 'data_pasien.id_kecamatan')
+            //     ->where('data_kecamatan.id', $keca)
+            //     ->where('riwayat_pasien.tahun', $tahun)
+            //     ->where('riwayat_pasien.bulan', $bulan)
+            //     ->get();
+
+            //     $dat=[];
+            //     foreach ($data as $key => $value){
+            //         $dat[]=[
+            //             'kec'=>$value->nama_kecamatan,
+            //             'nama'=>$value->nama_pasien
+            //         ];
+            //     };
+            //return $dat;
+            
+           
+    
+        
+}
    
 
     

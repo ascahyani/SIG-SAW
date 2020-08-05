@@ -2,10 +2,7 @@
 @section('content')
 
 @section ('judul')
-
     <div class="content-page">
-        
-			
         <!-- Start content -->
         <div class="content">
            <div class="container-fluid">
@@ -78,12 +75,41 @@
                                                 <button type="submit" class="btn btn-primary btn-rounded btn-md mb-4 float-right">Cari</button>
                                             </div>
                                             
-                                            <h2> {{ $bulan }} {{ $tahun }}</h2>
+                                            <h2> {{ $bulan }} {{ $tahun }}</h2> 
+                                            <br>
+
+                                            <?php $namkec = DB::table('data_kecamatan')->orderby('nama_kecamatan')->get();?>
+                                            <div class="form-check form-check-inline kecam">
+                                                <input type="checkbox" class="form-check-input" id="check_all" name="kecamatan">
+                                                <label class="form-check-label" for="defaultInline1">Tampilkan semua</label>
+                                            </div>
+                                            @foreach($namkec as $nama)
+                                                @php
+                                                $id = 'kecamatan-'.$nama->id;   
+                                                @endphp                                      
+                                                <div class="form-check form-check-inline kecam">
+                                                    <input type="checkbox" class="form-check-input kec" name="kecamatan" value="{{$nama->id}}">
+                                                    <label class="form-check-label" for="defaultInline1">{{$nama->nama_kecamatan}}</label>
+                                                </div>
+                                            @endforeach
                                           
 
                                         <div class="form-group">
                                             <div id="dvMap" style="width: 100%; height: 500px;"></div>
                                         </div>
+
+                                        <div class="col-lg-15">
+                                            <div class="card m-b-30 text-white bg-primary">
+                                                <div class="card-body">
+                                                    <blockquote class="card-blockquote mb-0">
+                                                    <p>Peta ini menampilkan Sebaran Titik Pasien Tuberkulosis sesuai Alamat Pasien. Informasi tentang nama dan alamat Pasien
+                                                        dapat anda lihat dengan mengklik Titik Pasien pada Peta. 
+                                                    </p>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -98,58 +124,128 @@
 
 @endsection
 @push('script')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6a6dy99jZcyrlIe7OghOsZ0khO1x4O8&libraries=places" async defer> </script>
+{{-- <script>
+    $(function(){
+        
+    $('.kec').click(function(){
+        var kecaa = [];
+        $('.kec').each(function(){
+            if($(this).is(":checked")){
+                kecaa.push($(this).val());
+            }
+        });
+
+        finalkecaa = kecaa.toString();
+        console.log(finalkecaa);
+
+        $.ajax({
+            type:'get',
+            dataType:'html',
+            url: '',
+            data: {keca: kecaa},
+            success: function(response){
+                console.log(response);
+                $('.updateDiv').html(response);
+            }
+        });
+
+    });
+    
+});
+</script> --}}
 <script type="text/javascript">
+let pasien = {!! json_encode($pasien) !!}
+markersAll = [];
+for(pas in pasien){
+    let pasien_data = pasien[pas];
+    data = {
+        'lat' : pasien_data['latitude'],
+        'long' : pasien_data['longitude'],
+        'nama_pasien' : pasien_data['nama_pasien'],
+        'alamat' : pasien_data['alamat']
+    };
+    markersAll.push(data);
+}
 
-var markers = [
-
-@foreach( $pasien as $pas){
- "lat": '{{$pas->latitude}}',
- "long": '{{$pas->longitude}}',
- "nama_pasien": '{{$pas->nama_pasien}}',
- "alamat": '{{$pas->alamat}}'
- },
-@endforeach
-    ];
-
-        window.onload = function () {
-
-            var mapOptions = {
-            center: new google.maps.LatLng(-5.3971396, 105.2667887),
-                zoom: 12,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+function getMarkers(ids) {
+    markers = [];
+    for(pas in pasien){
+        let pasien_data = pasien[pas];
+        if(ids.includes(pasien_data['id_kecamatan'])){
+            data = {
+                'lat' : pasien_data['latitude'],
+                'long' : pasien_data['longitude'],
+                'nama_pasien' : pasien_data['nama_pasien'],
+                'alamat' : pasien_data['alamat']
             };
-            var infoWindow = new google.maps.InfoWindow();
-            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            markers.push(data);
+        }
+    }
+    return markers;
+}
 
-            for (i = 0; i < markers.length; i++) {
-                var data = markers[i];
+function loadMap(markers) {
+    var mapOptions = {
+        center: new google.maps.LatLng(-5.3971396, 105.2667887),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var infoWindow = new google.maps.InfoWindow();
+    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+    for (i = 0; i < markers.length; i++) {
+        var data = markers[i];
         var latnya = data.lat;
         var longnya = data.long;
 
         var myLatlng = new google.maps.LatLng(latnya, longnya);
-                var marker = new google.maps.Marker({
-                    position: myLatlng,
-                    map: map,
-                    icon: {
-                      url: "/assets/assets/images/point.png",
-                      scaledSize: new google.maps.Size(10, 10)
-                          },
-                    title: data.nama_faskes
-                });
-                (function (marker, data) {
-                    google.maps.event.addListener(marker, "click", function (e) {
-                        infoWindow.setContent('<b>Nama Pasien</b> :' + data.nama_pasien + '<br>' +
-                        '<b>Alamat</b> :' + data.alamat + '<br>')
-                        infoWindow.open(map, marker);
-                    });
-                })(marker, data);
-            }
-  google.maps.event.addListener(map, 'click', function( event ){
-  alert( "latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            icon: {
+                url: "/assets/assets/images/point.png",
+                scaledSize: new google.maps.Size(10, 10)
+            },
+            title: data.nama_faskes
+        });
+        (function (marker, data) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                infoWindow.setContent('<b>Alamat</b> :' + data.alamat + '<br>')
+                infoWindow.open(map, marker);
+            });
+        })(marker, data);
+    }
+    google.maps.event.addListener(map, 'click', function( event ){
+        alert( "latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+    });
+}
+
+window.onload = function () {
+    loadMap(markersAll);
+};
+
+$(".kec").change(function() {
+    let ids = [];
+    $(':checkbox:checked').each(function(i){
+        let val = parseInt($(this).val());
+        ids.push(val);
+    });
+    console.log(ids);
+    let markers = getMarkers(ids);
+    console.log(markers);
+    loadMap(markers);
 });
-        }
-    </script>
+
+$('#check_all').change(function () {
+    if($('#check_all').is(":checked")){
+        $('.kec').attr('checked', true); //klo klik "tampilkan semua", semua checkbox kecentang
+        loadMap(markersAll);
+    }else{
+        $('.kec').attr('checked', false);
+        loadMap([]);
+    }
+});
+</script>
 
     <script>
         $(document).ready(function(){

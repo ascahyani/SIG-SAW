@@ -1,4 +1,4 @@
-@extends('master_pengunjung')
+@extends('master_admin')
 @section('content')
 
 @section ('judul')
@@ -15,7 +15,7 @@
                        <div class="page-title-box">
                            <h4 class="page-title">Sistem Informasi Geografis Penyebaran Penyakit Tuberkulosis di Kota Bandar Lampung</h4>
                            <ol class="breadcrumb">
-                               <li class="breadcrumb-item active mdi mdi-chevron-right ">Halaman Pengunjung</li>
+                               <li class="breadcrumb-item active mdi mdi-chevron-right ">Halaman Peta Pesebaran Pasien Tuberkulosis</li>
                            </ol>
                        </div>
                    </div>
@@ -31,7 +31,7 @@
                                                 <div class="card">
                                                     <div class="header">
                                                         <h2>
-                                                            <center>Peta Penyebaran Pasien Penyakit Tuberkulosis di Kota Bandar Lampung</center>
+                                                            <center>Cetak Data Pasien TB</center>
                                                            
                                                         </h2>
                                                     </div>
@@ -40,7 +40,7 @@
                                             </div>
                                         </div>
                                         <h4 class="mt-0 header-title">Pilih Bulan dan Tahun</h4>
-                                        <form method="post" action="/peta_faskes_pengunjung/cari" class="form-horizontal">
+                                        <form method="post" action="/data_riwayat_pasien/cetak" class="form-horizontal">
 
                                             {{csrf_field()}}  <!-- untuk generate token-->
 
@@ -50,7 +50,7 @@
                                                 <select class="custom-select" name="bulan">
                                                     <option selected>Pilih Bulan</option>
                                                     <option value="Januari">Januari</option>
-                                                    <option value="Februari">februari</option>
+                                                    <option value="Februari">Februari</option>
                                                     <option value="Maret">Maret</option>
                                                     <option value="April">April</option>
                                                     <option value="Mei">Mei</option>
@@ -75,15 +75,15 @@
                                         </div>
                                             
                                             <div class="pull-right">
-                                                <button type="submit" class="btn btn-primary btn-rounded btn-md mb-4 float-right">Cari</button>
+                                                <button type="submit" class="btn btn-primary btn-rounded btn-md mb-4 float-right">Cetak</button>
                                             </div>
+                                        
                                         </form>
-
-                                      
                                     </div>
                                 </div>
                             </div> <!-- end col -->
-       
+                    </div> <!-- end row -->
+    
            </div> <!-- container-fluid -->
        
        </div> <!-- content -->
@@ -92,7 +92,6 @@
 
 @endsection
 @push('script')
-
 
     <script>
         $(document).ready(function(){
@@ -109,5 +108,28 @@
             } 
         })
     </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+    
+    <script type="text/javascript">
+        $(function() {
+            $('.date-picker').datepicker( {
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'yy-mm',
+            onClose: function(dateText, inst) { 
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+            });
+        });
+    </script>
+    <style>
+        .ui-datepicker-calendar {
+            display: none;
+        }
+    </style>
 
 @endpush

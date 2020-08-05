@@ -18,15 +18,16 @@ Route::get('/', function () {
 
 //route coba coba
 Route::post('/coba_tanggal', 'SIGTBController@coba')->name('tanggal');
-
+Route::get('/coba_cekbox2', 'SIGTBController@cekbox');
 Route::get('/coba_kepadatan', 'BobotController@kepadatan');
-Route::get('/coba_indeks', 'BobotController@indeks_rtphbs');
-Route::get('/coba_faskes', 'BobotController@jumlah_faskes');
-Route::get('/coba_kasustb', 'BobotController@kasustb');
+Route::get('/coba_indeks', 'BobotController@bobot_indeks');
+Route::get('/coba_faskes', 'BobotController@bobot_faskes');
+Route::get('/coba_kasustb', 'BobotController@bobot_kasustb');
 Route::get('/coba_kematian', 'BobotController@kematiancoba');
 Route::get('/coba_costkasus', 'BobotController@cost_kasustb');
-Route::post('/coba_matriks', 'BobotController@api')->name('hasil.matriks');
+Route::get('/coba_matriks', 'BobotController@api')->name('hasil.matriks');
 Route::get('/coba_saw', 'BobotController@matriks');
+Route::get('/hitung', 'RiwayatpasienController@count');
 
 Route::get('/coba_hahaha', 'BobotController@bobot_indeks');
 
@@ -40,7 +41,7 @@ Route::get('/api', 'BobotController@Api')->name('api');
 Route::get('/poligon', 'BobotController@matriks')->name('poligon');
 Route::get('/gpoligon', 'BobotController@matriks');
 Route::get('/peta', 'BobotController@matriks')->name('peta');
-Route::get('/json', 'BobotController@json')->name('json');
+
 
 Route::get('/count_pasien', 'PasienController@data');
 
@@ -66,14 +67,20 @@ Route::post('/peta_rawan/cari', 'BobotController@matriks');
 
 
 Route::get('/gpoligon2', 'BobotController@matriks');
+Route::get('/api', 'BobotController@Api')->name('api');
+Route::get('/json', 'BobotController@json')->name('json');
 
 
 // route halaman pengunjung
 Route::get('/peta_faskes_pengunjung', 'PengunjungController@peta_faskes_p');
-Route::post('/peta_faskes_pengunjung/cari', 'PengunjungController@peta_faskes2_p');
+Route::post('/peta_faskes_pengunjung/cari', 'PengunjungController@titik_faskes');
 
 Route::get('/peta_pasien_pengunjung', 'PengunjungController@peta_pasien_p');
 Route::post('/peta_pasien_pengunjung/cari', 'PengunjungController@peta_pasienn_p');
+
+Route::get('/gpoligon_p', 'BobotpengunjungController@matriks');
+Route::get('/api_p', 'BobotpengunjungController@Api')->name('api_p');
+Route::get('/json_p', 'BobotpengunjungController@json')->name('json_p');
 
 
 //halaman admin
@@ -86,12 +93,17 @@ Route::get('/data_pasien_tb/hapus/{id}','PasienController@hapus');
 
 
 Route::get('/data_riwayat_pasien', 'RiwayatpasienController@index');
+
 Route::get('/data_riwayat_pasien/tambah', 'RiwayatpasienController@tambah');
+Route::post('/pasien', 'RiwayatpasienController@data_pasien')->name('pasien');
 Route::post('/data_riwayat_pasien/store', 'RiwayatpasienController@store');
 Route::get('/data_riwayat_pasien/edit/{id}','RiwayatpasienController@edit');
+Route::post('/editpas', 'RiwayatpasienController@edit_pasien')->name('editpas');
 Route::post('/data_riwayat_pasien/update','RiwayatpasienController@update');
 Route::get('/data_riwayat_pasien/hapus/{id}', 'RiwayatpasienController@hapus')->name('riwayat_pasien.hapus');
-Route::get('/data_riwayat_pasien/cetak', 'RiwayatpasienController@cetak');
+Route::get('/data_riwayat_pasien/filter', 'RiwayatpasienController@filter');
+Route::post('/data_riwayat_pasien/cetak', 'RiwayatpasienController@cetak');
+Route::get('/data_riwayat_pasien/excel', 'RiwayatpasienController@excel');
 
 
 Route::get('/data_kecamatan', 'KecamatanController@index');
@@ -101,6 +113,7 @@ Route::get('/data_kecamatan/edit/{id}', 'KecamatanController@edit');
 Route::post('/data_kecamatan/update','KecamatanController@update');
 Route::get('/data_kecamatan/hapus/{id}', 'KecamatanController@hapus');
 Route::get('/data_kecamatan/cetak', 'KecamatanController@cetak');
+Route::get('/data_kecamatan/excel', 'KecamatanController@excel');
 
 
 Route::get('/data_kepadatan', 'KepadatanController@index');
